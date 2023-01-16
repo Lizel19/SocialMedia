@@ -1,0 +1,11 @@
+#header span {
+    font-family: Script MT Bold;
+    color: black;
+}
+#nav {
+    font-size: 25px;
+}
+#nav a {
+    padding-right: 25px;
+    color: black;
+}

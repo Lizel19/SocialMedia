@@ -1,0 +1,27 @@
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" id="header">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+    <span class="fs-4">Aesthetic Outfit</span>
+  </a>
+  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+  </form>
+  <ul class="nav nav-pills" id="nav">
+    <a routerLink="/newsfeed"><mat-icon>home</mat-icon></a>
+    <a routerLink="/chat"><mat-icon>chat</mat-icon></a>
+    <a routerLink="/uploadpost"><mat-icon>add_box</mat-icon></a>
+    <a routerLink=""><mat-icon>favorite</mat-icon></a>
+    <div class="row">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <a ngbDropdownToggle><mat-icon>person</mat-icon></a>   
+          <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+            <button type="button" ngbDropdownItem><mat-icon>account_circle</mat-icon> Profile</button>
+            <div class="dropdown-divider"></div>
+            <a routerLink="/"class="button" ngbDropdownItem><mat-icon>logout</mat-icon> Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ul>
+</header>
