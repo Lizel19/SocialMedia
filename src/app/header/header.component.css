@@ -1,11 +1,13 @@
 #header span {
     font-family: Script MT Bold;
     color: black;
+    margin-right: 900px;
 }
 #nav {
     font-size: 25px;
 }
 #nav a {
     padding-right: 25px;
+    margin-right: 5px;
     color: black;
 }

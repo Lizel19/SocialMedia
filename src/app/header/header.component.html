@@ -1,0 +1,12 @@
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" id="header">
+    <a href="#" class="navbar-brand">
+      <span class="fs-4">Aesthetic Outfit</span>
+    </a>
+    <ul class="nav nav-pills" id="nav">
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/newsfeed"><mat-icon>home</mat-icon></a></li>
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/chat"><mat-icon>chat</mat-icon></a></li>
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/uploadpost"><mat-icon>add_box</mat-icon></a></li>
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/profile"><mat-icon>account_circle</mat-icon></a></li>
+      <li style="cursor: pointer;" *ngIf="isAuthenticated" (click)="onLogout()"><a><mat-icon>logout</mat-icon></a></li>
+    </ul>
+  </header>

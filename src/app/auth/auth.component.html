@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="alert alert-danger" *ngIf="error">
+        <p>{{error}}</p>
+    </div>
+    <div class="alert alert-success" *ngIf="success">
+        <p>{{success}}</p>
+    </div>
+    <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="!isLoginMode">
+        <h2>REGISTER</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="onSignup()" >
+            <div class="form-group">
+                <input 
+                type="text"
+                id="full_name"
+                name="full_name"
+                placeholder="Full Name"
+                formControlName="full_name"
+                class="form-control"
+                >
+                <span class="help-block" style="color: red;" *ngIf="!signupForm.get('full_name').valid && signupForm.get('full_name').touched">Field Required</span>
+            </div>
+            <div class="form-group">
+                <input 
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email"
+                formControlName="email"
+                class="form-control"
+                >
+                <span class="help-block" style="color: red;" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">Please Enter a valid email!</span>
+            </div>
+            <div formGroupName="passwords">
+                <div class="form-group">
+                    <input 
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    formControlName="password"
+                    class="form-control"
+                    >
+                    <span class="help-block" style="color: red;" *ngIf="!signupForm.get('passwords.password').valid && signupForm.get('passwords.password').touched">
+                        Input atleast 8 characters</span>
+  
+                </div>
+                <div class="form-group">
+                    <input 
+                    type="password"
+                    id="password_confirm"
+                    placeholder="Confirm Password"
+                    formControlName="password_confirm"
+                    name="password_confirm"
+                    class="form-control"
+                    >
+                    <span class="help-block" style="color: red;" *ngIf="!signupForm.get('passwords.password_confirm').valid && signupForm.get('passwords.password_confirm').touched">
+                        Field Required</span>
+                        <span class="help-block" style="color: red;" *ngIf="signupForm.get('passwords').errors?.notsame">
+                        Passwords must be same!</span>  
+                </div>
+            </div>
+            <div class="button_group">
+                <button class="btn btn-success" type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+                <button class="btn btn-primary" type="button" (click)="onSwitch()">Back to Login</button>
+            </div>
+        </form>
+    </div>
+  
+    <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="isLoginMode">
+        <h2>LOGIN</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+            <div class="form-group">
+                <input 
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email"
+                formControlName="email"
+                class="form-control"
+                >
+                <span class="help-block" style="color: red;" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Please Enter a valid email!</span>
+            </div>
+            <div class="form-group">
+                <input 
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                formControlName="password"
+                class="form-control"
+                >
+                <span class="help-block" style="color: red;" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Field Required!</span>
+  
+            </div>
+            <div class="button_group">
+                <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">Login </button>
+                <button class="btn btn-primary" type="button" (click)="onSwitch()">Back to SignUp</button>
+            </div>
+        </form>
+    </div>
+    
+  </div>

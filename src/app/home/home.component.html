@@ -6,7 +6,7 @@
                 <p>
                     Share your Aesthetic Outfit!
                 </p>
-                <a routerLink="/login" type="button" class="btn btn-outline-light me-2">Get Started</a>
+                <a routerLinkActive style="cursor: pointer;" type="button" class="btn btn-outline-light me-2" routerLink="/auth" *ngIf="!isAuthenticated">Get Started</a>
             </div>
         </div>
     </div>
