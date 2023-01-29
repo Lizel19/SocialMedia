@@ -5,8 +5,32 @@ from rest_framework.response import Response
 from aestheticApp.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
 from aestheticApp.models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer,OutfitSerializer
+from rest_framework import viewsets
+from django.http import HttpResponse
+from .models import Outfit
 
+
+from rest_framework import viewsets
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed/created/edited/deleted.
+    """
+    queryset = User.objects.all().order_by('id')
+    serializer_class = UserSerializer
+    update_data_pk_field = 'id'
+
+class OutfitViewSet(viewsets.ModelViewSet):
+    queryset = Outfit.objects.all()
+    serializer_class = OutfitSerializer
+
+    def post(self, request, *args, **kwargs):
+        cover = request.data['cover']
+        title = request.data['title']
+        Outfit.objects.create(title=title, cover=cover)
+        return HttpResponse({'message': 'Outfit created'}, status=200)
 
 class RegisterAPIView(APIView):
     def post(self, request):
