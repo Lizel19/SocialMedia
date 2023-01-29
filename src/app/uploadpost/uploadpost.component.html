@@ -3,10 +3,10 @@
     <div class="contact-box">
       <h3>CREATE POST</h3>
       <form>
-        <input type="text" class="input-field" placeholder="Write a caption...">
-        <input type="file" id="myFile" placeholder="What's in your mind">
+        <input type="text" class="input-field" placeholder="Write a caption..."  (change)="onTitleChanged($event)" />
+        <input type="file" id="myFile" (change)="onImageChanged($event)" />
         <div class="button_group" id="post_button">
-          <a href="">POST</a>
+          <a routerLink="/newsfeed" (click)="newBook()">POST</a>
         </div>
       </form>
     </div>
