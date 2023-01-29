@@ -1,5 +1,12 @@
 from rest_framework.serializers import ModelSerializer
-from .models import User
+from .models import User, Outfit
+from rest_framework import serializers
+
+
+class OutfitSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Outfit
+        fields = ['title', 'cover']
 
 class UserSerializer(ModelSerializer):
     class Meta:
