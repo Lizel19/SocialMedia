@@ -22,3 +22,13 @@ class UserSerializer(ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+      
+   class PostingSerializer(ModelSerializer):
+    class Meta:
+        model = Posting
+        fields = ['user_id', 'content', 'image', 'created_at']
+
+class OutfitSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Outfit
+        fields = ['user_id', 'content', 'image', 'date_created']
