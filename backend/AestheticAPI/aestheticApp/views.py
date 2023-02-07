@@ -82,3 +82,29 @@ class LogoutAPIView(APIView):
             'message': 'success'
         }
         return response
+      
+      class OutfitViewSet(viewsets.ModelViewSet):
+    queryset = Outfit.objects.all()
+    serializer_class = OutfitSerializer
+   
+    def post(self, request, *args, **kwargs):
+        user_id = request.data['user_id']
+        image = request.data['image']
+        content = request.data['content']
+        date_created = request.data['date_created']
+        Outfit.objects.create(user_id= user_id, content=content, image=image, date_created= date_created)
+        return HttpResponse({'message': 'Outfit created'}, status=200)
+
+
+
+
+
+class FetchPostAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT user_id,full_name,post_id,content,aestheticapp_posting.image,created_at FROM aestheticapp_posting INNER JOIN aestheticapp_user ON aestheticapp_posting.user_id = aestheticapp_user.id WHERE aestheticapp_posting.post_id = %(select_cond)s''', params={'select_cond': data['user_id']})
+        
+
+
