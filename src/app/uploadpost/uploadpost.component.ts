@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { PostService } from '../services/post.service';
+import { Post } from '../models/post';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { UserProfile } from '../models/user-profile';
+import { NewsFeed } from '../models/newsfeed';
+import { AuthService } from '../services/auth.service';
+import { ModalDismissReasons, NgbDatepickerModule, NgbModal, } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-uploadpost',
@@ -7,26 +15,81 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./uploadpost.component.css']
 })
 export class UploadpostComponent {
-  title: string;
-  cover: File;
+  public textArea: string = '';
 
-  constructor(private http: HttpClient) {}
+  post: string = '';
+  hasImage: boolean = false;
+  ImageFile = [];
+  postButton: boolean = true;
+  user_id: number = 1;
+  full_name?: string;
+  email?: string;
 
-  onTitleChanged(event: any) {
-    this.title = event.target.value;
+  newsfeed: NewsFeed[] = [];
+  UserToken: UserProfile[] = [];
+ 
+
+  jwtHelper = new JwtHelperService();
+
+  constructor(
+    private postService: PostService,
+    private sanitizer: DomSanitizer,
+    private auth: AuthService,
+    private modalService: NgbModal
+  ) {}
+
+  ngOnInit(): void {
+    this.getUserProfile();
   }
 
-  onImageChanged(event: any) {
-    this.cover = event.target.files[0];
+  getUserProfile() {
+    var data = JSON.parse(localStorage.getItem('user')!);
+    console.log(data);
+    if (data != null) {
+      this.user_id = data.id;
+      this.full_name = data.full_name;
+      this.email = data.email;
+    }
   }
 
-  newBook() {
-    const uploadData = new FormData();
-    uploadData.append('title', this.title);
-    uploadData.append('cover', this.cover, this.cover.name);
-    this.http.post('http://127.0.0.1:8000/outfit/', uploadData).subscribe(
-      data => console.log(data),
-      error => console.log(error)
-    );
+  SaveImage(event: any) {
+    if(event.target.files && event.target.files[0]){
+      const file = event.target.files[0];
+      this.ImageFile = file
+      console.log(this.ImageFile)
+    }
+  }
+
+
+  createPost() {
+    let postData: Post = {
+      user_id: this.user_id,
+      content: this.post,
+      image: this.ImageFile,
+      date_created: '',
+    };
+    var formData: any = new FormData();
+    formData.append('user_id', this.user_id);
+    formData.append('content', this.post);
+    formData.append('image', this.ImageFile);
+    formData.append('date_created', '');
+
+    this.postService.UploadPost(formData).subscribe((data) => {
+      console.log(data);
+      this.post = '';
+      this.postButton = true;
+      this.hasImage = false;
+      this.ImageFile = [];
+    });
+  }
+
+  PostContent(e: any) {
+    if (this.post === '') {
+      this.postButton = true;
+      console.log('no value');
+    } else {
+      this.postButton = false;
+      console.log('has value');
+    }
   }
 }
